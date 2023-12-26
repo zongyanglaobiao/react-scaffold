@@ -12,3 +12,17 @@ modern.jsonp
 resources/sass/.sass-cache/
 resources/.arch-internal-preview.css
 .arch-internal-preview.css
+
+node_modules
+node_modules/
+
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/react-scaffold.iml
+/.idea/vcs.xml
+/.idea/modules.xml
+/.idea/misc.xml
+/.idea/encodings.xml
+/.idea/compiler.xml
+
+.idea
+.idea/
