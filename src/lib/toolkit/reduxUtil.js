@@ -2,15 +2,16 @@ import {createSlice} from "@reduxjs/toolkit";
 import {isObject} from "./util";
 
 
+
+const intiFunction = () => {}
 /**
- *
- * @param name slice的名字
- * @param initialState 初始值
- * @param reducers reducer是一个对象
- * @param extraReducersCallback   回调函数用于extraReducers，有一个参数builder，用于创建缓冲器
+ * 生成slice
+ * @param name
+ * @param initialState
+ * @param reducers
+ * @param extraReducersCallback
  * @returns {Slice<unknown, SliceCaseReducers<unknown>, string>}
  */
-const intiFunction = () => {}
 export const generateSlice = (name,
 							  initialState,
 							  reducers,

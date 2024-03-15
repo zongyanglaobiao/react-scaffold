@@ -1,5 +1,5 @@
-import './index.css'
-import './tailwind.css'
+import '../index.css'
+import '../tailwind.css'
 export  default  function App() {
     return (
         <h1 className=' w-full h-full text-center'>
