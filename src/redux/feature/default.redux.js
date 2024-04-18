@@ -1,4 +1,5 @@
-import {generateSlice} from "../../lib/toolkit/reduxUtil";
+import {generateSlice} from "@/lib/toolkit/redux.util.js";
+
 
 const tipMessage = generateSlice('TipMessage','this is a tip',
     {

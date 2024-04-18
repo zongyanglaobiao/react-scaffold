@@ -1,20 +1,21 @@
 import axios from "axios";
 
-const URL = process.env.REACT_APP_PATH.replace(';','').replaceAll('\'','');
+
+const URL = import.meta.env.VITE_REACT_APP_PATH
 
 const globalConfig = {
 
 }
 
 // 创建 axios 请求实例
-export const serviceAxios = axios.create({
+const request = axios.create({
 	baseURL:URL, // 基础请求地址
 	timeout: 10000, // 请求超时设置
 	withCredentials: false, // 跨域请求是否需要携带 cookie
 });
 
 // 创建请求拦截
-serviceAxios.interceptors.request.use(
+request.interceptors.request.use(
 	(config) => {
 		config.headers = {'Content-Type': 'application/json',...config.headers, ...globalConfig.headers};
 		//Post是data
@@ -28,7 +29,7 @@ serviceAxios.interceptors.request.use(
 
 
 // 创建响应拦截
-serviceAxios.interceptors.response.use(
+request.interceptors.response.use(
 	(res) => {
 		return res.data;
 	},
@@ -84,7 +85,4 @@ serviceAxios.interceptors.response.use(
 	}
 );
 
-export function isSuccess(code) {
-	return code === 200
-}
-
+export default request

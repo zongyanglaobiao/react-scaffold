@@ -1,6 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {isObject} from "./util";
-
+import {isObject} from "@/lib/toolkit/util.js";
 
 
 const intiFunction = () => {}
@@ -12,10 +11,7 @@ const intiFunction = () => {}
  * @param extraReducersCallback
  * @returns {Slice<unknown, SliceCaseReducers<unknown>, string>}
  */
-export const generateSlice = (name,
-							  initialState,
-							  reducers,
-							  extraReducersCallback = intiFunction) => {
+export const generateSlice = (name,initialState,reducers, extraReducersCallback = intiFunction) => {
 	if (!isObject(reducers)) {
 		throw new Error("reducers is not an object");
 	}
