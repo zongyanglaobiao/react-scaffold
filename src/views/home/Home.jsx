@@ -2,7 +2,6 @@ import reactSvg from '@/assets/react.svg';
 import viteSvg from '@/assets/vite.svg';
 
 const Home = () => {
-
     return (
         <>
             <div className='w-full h-100vh layout-center'>

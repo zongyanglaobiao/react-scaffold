@@ -1,6 +1,7 @@
 import {lazy} from "react";
 
-const Home = lazy(() => import('/src/views/home/Home.jsx'))
+const Home = lazy(() => import('/src/views/home/Home'))
+const Test = lazy(() => import('/src/views/test/Test'))
 
 export default function routes() {
     return [
@@ -10,7 +11,7 @@ export default function routes() {
         },
         {
             path: "/test",
-            element: <Home/>
+            element: <Test/>
         }
     ];
 }

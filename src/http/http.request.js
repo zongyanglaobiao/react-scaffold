@@ -8,14 +8,14 @@ const globalConfig = {
 }
 
 // 创建 axios 请求实例
-const request = axios.create({
+const serviceAxios = axios.create({
 	baseURL:URL, // 基础请求地址
 	timeout: 10000, // 请求超时设置
 	withCredentials: false, // 跨域请求是否需要携带 cookie
 });
 
 // 创建请求拦截
-request.interceptors.request.use(
+serviceAxios.interceptors.request.use(
 	(config) => {
 		config.headers = {'Content-Type': 'application/json',...config.headers, ...globalConfig.headers};
 		//Post是data
@@ -29,7 +29,7 @@ request.interceptors.request.use(
 
 
 // 创建响应拦截
-request.interceptors.response.use(
+serviceAxios.interceptors.response.use(
 	(res) => {
 		return res.data;
 	},
@@ -85,4 +85,27 @@ request.interceptors.response.use(
 	}
 );
 
-export default request
+const request = {
+	post:(url,data = {}) => {
+		return serviceAxios({
+			url: url,
+			method: "post",
+			data: data,
+			headers: {
+				"Content-Type": "application/json"
+			}
+		})
+	},
+	get:(url,params = {})=>{
+		return serviceAxios({
+			url: url,
+			method: "get",
+			params: params,
+			headers: {
+				"Content-Type": "application/json"
+			}
+		})
+	}
+}
+
+export default request;
