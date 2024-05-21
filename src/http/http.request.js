@@ -1,11 +1,23 @@
 import axios from "axios";
-
+import {message} from "antd";
+import {store} from "@/redux/store.js";
+import {AUTHORIZE_FAIL, authorizeAction} from "@/redux/feature/authorize.js";
 
 const URL = import.meta.env.VITE_REACT_APP_PATH
+const TOKEN_NAME = "auth";
 
-const globalConfig = {
-
+const getToken = () => {
+	return localStorage.getItem(TOKEN_NAME) || ''
 }
+
+const setToken = (token) => {
+	localStorage.setItem(TOKEN_NAME, token)
+}
+
+const removeToken = () => {
+	localStorage.removeItem(TOKEN_NAME)
+}
+
 
 // 创建 axios 请求实例
 const serviceAxios = axios.create({
@@ -17,7 +29,7 @@ const serviceAxios = axios.create({
 // 创建请求拦截
 serviceAxios.interceptors.request.use(
 	(config) => {
-		config.headers = {'Content-Type': 'application/json',...config.headers, ...globalConfig.headers};
+		config.headers = {'Content-Type': 'application/json',...config.headers,[TOKEN_NAME]:getToken()};
 		//Post是data
 		//get是params
 		return config;
@@ -31,57 +43,66 @@ serviceAxios.interceptors.request.use(
 // 创建响应拦截
 serviceAxios.interceptors.response.use(
 	(res) => {
+		if (res.data.code === 403) {
+			//判断登录是否失效
+			message.error(res.data.message);
+			//移除之前的token
+			removeToken()
+			store.dispatch(authorizeAction(AUTHORIZE_FAIL))
+		}
 		return res.data;
 	},
 	(error) => {
-		let message = "";
+		let msg = "网络异常问题，请联系管理员！";
 		if (error && error.response) {
 			switch (error.response.status) {
 				case 302:
-					message = "接口重定向了！";
+					msg = "接口重定向了！";
 					break;
 				case 400:
-					message = "参数不正确！";
+					msg = "参数不正确！";
 					break;
 				case 401:
-					message = "您未登录，或者登录已经超时，请先登录！";
+					msg = "您未登录，或者登录已经超时，请先登录！";
 					break;
 				case 403:
-					message = "您没有权限操作！";
+					msg = "您没有权限操作！";
 					break;
 				case 404:
-					message = `请求地址出错: ${error.response.config.url}`;
+					msg = `请求地址出错: ${error.response.config.url}`;
 					break;
 				case 408:
-					message = "请求超时！";
+					msg = "请求超时！";
 					break;
 				case 409:
-					message = "系统已存在相同数据！";
+					msg = "系统已存在相同数据！";
 					break;
 				case 500:
-					message = "服务器内部错误！";
+					msg = "服务器内部错误！";
 					break;
 				case 501:
-					message = "服务未实现！";
+					msg = "服务未实现！";
 					break;
 				case 502:
-					message = "网关错误！";
+					msg = "网关错误！";
 					break;
 				case 503:
-					message = "服务不可用！";
+					msg = "服务不可用！";
 					break;
 				case 504:
-					message = "服务暂时无法访问，请稍后再试！";
+					msg = "服务暂时无法访问，请稍后再试！";
 					break;
 				case 505:
-					message = "HTTP 版本不受支持！";
+					msg = "HTTP 版本不受支持！";
 					break;
 				default:
-					message = "异常问题，请联系管理员！";
+					msg = "异常问题，请联系管理员！";
 					break;
 			}
 		}
-		return Promise.reject(message);
+		//http错误进行提醒
+		message.error(msg);
+		return Promise.reject(msg);
 	}
 );
 
@@ -107,5 +128,7 @@ const request = {
 		})
 	}
 }
+
+export {URL,TOKEN_NAME,getToken,setToken,removeToken}
 
 export default request;
