@@ -1,31 +1,22 @@
 import reactSvg from '@/assets/react.svg';
 import viteSvg from '@/assets/vite.svg';
-import {useRouteLoaderData} from "react-router-dom";
-import {ROOT_PATH} from "@/router/index.jsx";
-import {useEffect, useState} from "react";
+import {useFetcher, useRouteLoaderData} from "react-router-dom";
+import {HOME_PATH} from "@/router/index.jsx";
+import {useEffect} from "react";
 
 const Home = () => {
-    const data = useRouteLoaderData(ROOT_PATH);
-    // 定义一个状态来存储当前时间
-    const [currentTime, setCurrentTime] = useState(new Date());
+    const data = useRouteLoaderData(HOME_PATH);
+    const fetcher = useFetcher();
 
-    // 使用 useEffect 设置一个定时器来更新时间
     useEffect(() => {
-        const timer = setInterval(() => {
-            setCurrentTime(new Date());
-        }, 1000); // 每秒更新一次
+        const timer = setTimeout(()=>{
+            fetcher.load(HOME_PATH)
+        },1000);
 
-        // 清除定时器
-        return () => clearInterval(timer);
-    }, []);
-
-    // 格式化当前时间
-    const year = currentTime.getFullYear();
-    const month = String(currentTime.getMonth() + 1).padStart(2, '0'); // 月份从0开始
-    const day = String(currentTime.getDate()).padStart(2, '0');
-    const hour = String(currentTime.getHours()).padStart(2, '0');
-    const minute = String(currentTime.getMinutes()).padStart(2, '0');
-    const second = String(currentTime.getSeconds()).padStart(2, '0');
+        return () => {
+            clearTimeout(timer)
+        }
+    });
 
     return (
         <div className='w-full h-100vh layout-center'>
@@ -38,8 +29,7 @@ const Home = () => {
                 <div className='text-center text-2xl mt-20px'>
                     Hello,React + Vite
                 </div>
-                <strong className={'mt-2px'}>{data}</strong>
-                {`${year}/${month}/${day} ${hour}:${minute}:${second}`}
+                <p className='mt-5px text-center w-full'>{fetcher.data || data}</p>
             </div>
         </div>
     );
