@@ -1,6 +1,6 @@
 # React + Vite
 
-> PC端
+> Mobile端
 
 **React脚手架**
 

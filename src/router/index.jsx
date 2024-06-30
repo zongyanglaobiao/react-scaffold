@@ -9,35 +9,34 @@ const ROOT_PATH = "/";
 const HOME_PATH = "/home";
 const NOT_FOUND_PATH = "*";
 
-function routes() {
-    return [
-        {
-            path: NOT_FOUND_PATH,
-            element: <NotFoundPage/>
-        },
-        {
-            path: HOME_PATH,
-            element: <HomePage/>,
-            errorElement: <ErrorBoundaryPage/>,
-            loader:()=> {
-                let currentTime = new Date();
-                const year = currentTime.getFullYear();
-                const month = String(currentTime.getMonth() + 1).padStart(2, '0'); // 月份从0开始
-                const day = String(currentTime.getDate()).padStart(2, '0');
-                const hour = String(currentTime.getHours()).padStart(2, '0');
-                const minute = String(currentTime.getMinutes()).padStart(2, '0');
-                const second = String(currentTime.getSeconds()).padStart(2, '0');
+const router = createHashRouter([
+    {
+        path: NOT_FOUND_PATH,
+        element: <NotFoundPage/>
+    },
+    {
+        path: HOME_PATH,
+        element: <HomePage/>,
+        errorElement: <ErrorBoundaryPage/>,
+        loader:()=> {
+            let currentTime = new Date();
+            const year = currentTime.getFullYear();
+            const month = String(currentTime.getMonth() + 1).padStart(2, '0'); // 月份从0开始
+            const day = String(currentTime.getDate()).padStart(2, '0');
+            const hour = String(currentTime.getHours()).padStart(2, '0');
+            const minute = String(currentTime.getMinutes()).padStart(2, '0');
+            const second = String(currentTime.getSeconds()).padStart(2, '0');
 
-                return `${year}/${month}/${day} ${hour}:${minute}:${second}`
-            },
-            id: HOME_PATH
+            return `${year}/${month}/${day} ${hour}:${minute}:${second}`
         },
-        {
-            path: ROOT_PATH,
-            element: <Navigate to={HOME_PATH} />
-        }
-    ];
-}
+        id: HOME_PATH
+    },
+    {
+        path: ROOT_PATH,
+        element: <Navigate to={HOME_PATH} />
+    }
+])
 
-export default  createHashRouter(routes())
+
+export default  router
 export {HOME_PATH}

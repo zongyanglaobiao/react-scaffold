@@ -2,11 +2,12 @@ import reactSvg from '@/assets/react.svg';
 import viteSvg from '@/assets/vite.svg';
 import {useFetcher, useRouteLoaderData} from "react-router-dom";
 import {HOME_PATH} from "@/router/index.jsx";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 
 const Home = () => {
     const data = useRouteLoaderData(HOME_PATH);
     const fetcher = useFetcher();
+    const [showTime, setShowTime] = useState(false)
 
     useEffect(() => {
         const timer = setTimeout(()=>{
@@ -19,8 +20,8 @@ const Home = () => {
     });
 
     return (
-        <div className='w-full h-100vh layout-center'>
-            <div>
+        <div className='w-full h-vh layout-center'>
+            <div className='flex flex-col'>
                 <div className='layout-center w-full'>
                     <img src={reactSvg} alt="react" className='w-100px h-100px'/>
                     <h1>+</h1>
@@ -29,7 +30,17 @@ const Home = () => {
                 <div className='text-center text-2xl mt-20px'>
                     Hello,React + Vite
                 </div>
-                <p className='mt-5px text-center w-full'>{fetcher.data || data}</p>
+                {
+                    showTime &&
+                    <p className='mt-5px text-center w-full'>{fetcher.data || data}</p>
+                }
+                <button
+                    onClick={() => setShowTime(!showTime)}
+                    className='bg-transparent rounded-md border-1px border-gray mt-20px h-40px text-black'>
+                    {
+                        showTime ? '隐藏时间' : '显示时间'
+                    }
+                </button>
             </div>
         </div>
     );
