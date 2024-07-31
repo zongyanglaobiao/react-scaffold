@@ -20,7 +20,6 @@ const useFetch = (requestMethod,initResp = null,debounceTime = 300) =>{
     const [error, setError] = useState(null)
     //是否在加载
     const [loading, setLoading] = useState(false)
-
     // 防抖的设置代理请求方法的参数
     const debouncedSetRequestMethodParam = useCallback(debounce(setRequestMethodParam, debounceTime), []);
 

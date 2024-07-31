@@ -30,8 +30,7 @@ const serviceAxios = axios.create({
 serviceAxios.interceptors.request.use(
 	(config) => {
 		config.headers = {'Content-Type': 'application/json',...config.headers,[TOKEN_NAME]:getToken()};
-		//Post是data
-		//get是params
+		//Post是data，get是params
 		return config;
 	},
 	(error) => {
