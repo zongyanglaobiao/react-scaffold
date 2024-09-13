@@ -4,6 +4,7 @@ import {createHashRouter} from "react-router-dom";
 const HomePage = lazy(() => import('/src/views/home/Home.jsx'))
 const ErrorBoundaryPage = lazy(() => import('/src/component/errorBoundary/ErrorBoundary.jsx'))
 const NotFoundPage = lazy(() => import('/src/component/404/NotFound.jsx'))
+const RootPage = lazy(() => import('/src/views/App.jsx'))
 
 const ROOT_PATH = "/";
 const HOME_PATH = "/home";
@@ -17,12 +18,13 @@ const router = createHashRouter([
     {
         path: ROOT_PATH,
         errorElement: <ErrorBoundaryPage/>,
+        element: <RootPage/>,
         children: [
             {
                 path: HOME_PATH,
                 element: <HomePage/>,
             },
-        ],
+        ]
     }
 ])
 
