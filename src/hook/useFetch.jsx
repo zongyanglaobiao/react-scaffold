@@ -3,7 +3,7 @@ import {isNullOrUndefined} from "@/lib/toolkit/util.js";
 import {debounce} from "@/lib/toolkit/debounce.js";
 
 /**
- * 请求代理HOOK，运用AOP
+ * 用于请求的HOOK
  * @param requestMethod 请求方法
  * @param initResp 初始响应
  * @param debounceTime 接口防抖时间
@@ -20,7 +20,7 @@ const useFetch = (requestMethod,initResp = null,debounceTime = 300) =>{
     const [error, setError] = useState(null)
     //是否在请求中
     const [loading, setLoading] = useState(false)
-    // 接口请求设置防抖
+    // 请求防抖
     const debouncedSetRequestMethodParam = debounce(setRequestMethodParam, debounceTime)
     //如果为NULL表示代理的方法不需要参数
     const setProxyMethodParam = (...param) => {
@@ -47,8 +47,8 @@ const useFetch = (requestMethod,initResp = null,debounceTime = 300) =>{
     return [
         response,
         setProxyMethodParam,
-        error,
-        loading
+        loading,
+        error
     ]
 }
 
