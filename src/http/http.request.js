@@ -2,22 +2,9 @@ import axios from "axios";
 import {message} from "antd";
 import {store} from "@/redux/store.js";
 import {AUTHORIZE_FAIL, authorizeAction} from "@/redux/feature/authorize.js";
+import {getTokenName, getToken, removeToken} from "@/lib/toolkit/local.storage.js";
 
 const URL = import.meta.env.VITE_REACT_APP_PATH
-const TOKEN_NAME = "auth";
-
-const getToken = () => {
-	return localStorage.getItem(TOKEN_NAME) || ''
-}
-
-const setToken = (token) => {
-	localStorage.setItem(TOKEN_NAME, token)
-}
-
-const removeToken = () => {
-	localStorage.removeItem(TOKEN_NAME)
-}
-
 
 // 创建 axios 请求实例
 const serviceAxios = axios.create({
@@ -29,7 +16,7 @@ const serviceAxios = axios.create({
 // 创建请求拦截
 serviceAxios.interceptors.request.use(
 	(config) => {
-		config.headers = {'Content-Type': 'application/json',...config.headers,[TOKEN_NAME]:getToken()};
+		config.headers = {'Content-Type': 'application/json',...config.headers,[getTokenName()]:getToken()};
 		//Post是data，get是params
 		return config;
 	},
@@ -47,7 +34,7 @@ serviceAxios.interceptors.response.use(
 			message.error(res.data.message);
 			//移除之前的token
 			removeToken()
-			store.dispatch(authorizeAction(AUTHORIZE_FAIL))
+			store.dispatch(authorizeAction())
 		}
 		return res.data;
 	},
@@ -128,6 +115,6 @@ const request = {
 	}
 }
 
-export {URL,TOKEN_NAME,getToken,setToken,removeToken}
+export {URL}
 
 export default request;
