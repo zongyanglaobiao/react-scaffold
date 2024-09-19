@@ -1,8 +1,8 @@
 import axios from "axios";
 import {message} from "antd";
 import {store} from "@/redux/store.js";
-import {AUTHORIZE_FAIL, authorizeAction} from "@/redux/feature/authorize.js";
-import {getTokenName, getToken, removeToken} from "@/lib/toolkit/local.storage.js";
+import {authorizeAction} from "@/redux/feature/authorize.js";
+import {getToken, getTokenName, removeToken} from "@/lib/toolkit/local.storage.js";
 
 const URL = import.meta.env.VITE_REACT_APP_PATH
 
