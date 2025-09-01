@@ -2,8 +2,8 @@ import {lazy} from "react";
 import {createHashRouter} from "react-router-dom";
 
 const HomePage = lazy(() => import('/src/views/home/Home.jsx'))
-const ErrorBoundaryPage = lazy(() => import('/src/component/errorBoundary/ErrorBoundary.jsx'))
-const NotFoundPage = lazy(() => import('/src/component/404/NotFound.jsx'))
+const ErrorBoundaryPage = lazy(() => import('/src/component/error/error-boundary.jsx'))
+const NotFoundPage = lazy(() => import('/src/component/not-found/not-found.jsx'))
 const RootPage = lazy(() => import('/src/views/App.jsx'))
 
 const ROOT_PATH = "/";
